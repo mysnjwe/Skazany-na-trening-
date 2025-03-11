@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skazany na Trening</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset CSS */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #0066FF;
+            --primary-dark: #0052CC;
+            --secondary: #FAFAFA;
+            --accent: #FF3366;
+            --dark: #0A0A0A;
+            --dark-gray: #343434;
+            --gray: #757575;
+            --light-gray: #E0E0E0;
+            --white: #FFFFFF;
+            --bg-gradient: linear-gradient(135deg, #0066FF 0%, #5E9FFF 100%);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 24px;
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 4rem;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease;
+        }
+        
+        body.dark-mode {
+            --secondary: #151515;
+            --dark: #FAFAFA;
+            --dark-gray: #CCCCCC;
+            --gray: #999999;
+            --light-gray: #333333;
+            --white: #121212;
+            background-color: var(--white);
+            color: var(--dark);
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .section {
+            padding: var(--spacing-xl) 0;
+            position: relative;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            letter-spacing: -0.02em;
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            letter-spacing: -0.02em;
+        }
+        
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+        
+        p {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .text-gradient {
+            background: var(--bg-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            display: inline-block;
+        }
+        
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            padding: var(--spacing-md) 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        body.dark-mode header {
+            background-color: rgba(18, 18, 18, 0.95);
+        }
+        
+        header.scrolled {
+            box-shadow: var(--shadow-sm);
+            padding: var(--spacing-sm) 0;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .logo-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--bg-gradient);
+            border-radius: 50%;
+            color: var(--white);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-lg);
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--dark);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .theme-toggle:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark);
+            width: 40px;
+            height: 40px;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 1.6rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            text-align: center;
+            white-space: nowrap;
+        }
+        
+        .btn-primary {
+            background: var(--bg-gradient);
+            color: var(--white);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .btn-primary:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-text {
+            background: none;
+            padding: 0.5rem 0.8rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .btn-text:hover {
+            background-color: rgba(0, 102, 255, 0.08);
+            border-radius: var(--radius-sm);
+        }
+        
+        .btn-icon {
+            margin-left: var(--spacing-sm);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 5rem;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content h1 {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .hero-image {
+            position: absolute;
+            right: -5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50%;
+            max-width: 650px;
+            z-index: 0;
+        }
+        
+        .hero-image img {
+            filter: drop-shadow(var(--shadow-lg));
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--secondary);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: var(--spacing-md);
+            color: var(--primary);
+        }
+        
+        .hero-badge i {
+            margin-right: 0.5rem;
+        }
+        
+        /* Features Section */
+        .features {
+            background-color: var(--secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl) 0;
+            margin-top: var(--spacing-xl);
+        }
+        
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto var(--spacing-xl);
+        }
+        
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.125rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .feature-card {
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-sm);
+            background-color: rgba(0, 102, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .feature-title {
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .feature-desc {
+            color: var(--gray);
+        }
+        
+        /* App Preview Section */
+        .app-preview {
+            padding: var(--spacing-xl) 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .preview-headline {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .preview-container {
+            background-color: var(--secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        
+        .preview-header {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .preview-title {
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .preview-date {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+        
+        .calendar-container {
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .calendar-month {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .calendar-controls {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+        
+        .calendar-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+        
+        .calendar-btn:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        
+        .calendar-header {
+            text-align: center;
+            font-weight: 500;
+            color: var(--gray);
+            font-size: 0.875rem;
+            padding-bottom: var(--spacing-sm);
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .calendar-day:hover:not(.inactive) {
+            background-color: var(--light-gray);
+        }
+        
+        .calendar-day.today {
+            background-color: rgba(0, 102, 255, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .calendar-day.workout {
+            color: var(--dark);
+        }
+        
+        .calendar-day.workout::after {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: var(--primary);
+        }
+        
+        .calendar-day.inactive {
+            color: var(--light-gray);
+            cursor: default;
+        }
+        
+        .workout-summary {
+            margin-top: var(--spacing-lg);
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .workout-day {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.1rem;
+        }
+        
+        .workout-exercises {
+            list-style: none;
+        }
+        
+        .workout-exercises li {
+            margin-bottom: var(--spacing-sm);
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .workout-exercises li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--primary);
+        }
+        
+        /* Plans Section */
+        .plans {
+            background-color: var(--secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .plans-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .plan-card {
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .plan-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .plan-name {
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .plan-tag {
+            display: inline-block;
+            background-color: rgba(0, 102, 255, 0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .plan-description {
+            padding: var(--spacing-lg);
+            flex-grow: 1;
+            color: var(--gray);
+        }
+        
+        .plan-footer {
+            padding: var(--spacing-lg);
+            background-color: var(--secondary);
+            text-align: center;
+        }
+        
+        /* Progress Section */
+        .progress-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .progress-card {
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .chart-placeholder {
+            height: 200px;
+            background-color: var(--secondary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            margin: var(--spacing-md) 0;
+        }
+        
+        .achievements-list {
+            list-style: none;
+        }
+        
+        .achievement-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        
+        .achievement-item:hover {
+            background-color: var(--secondary);
+        }
+        
+        .achievement-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            margin-right: var(--spacing-md);
+            flex-shrink: 0;
+        }
+        
+        .achievement-text {
+            font-weight: 500;
+        }
+        
+        /* Testimonials Section */
+        .testimonial-cards {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .testimonial-card {
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+        }
+        
+        .testimonial-content {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            margin-bottom: var(--spacing-md);
+            color: var(--dark-gray);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            margin-right: var(--spacing-md);
+            overflow: hidden;
+        }
+        
+        .author-name {
+            font-weight: 600;
+            display: block;
+        }
+        
+        .author-title {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+        
+        .quote-icon {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: rgba(0, 102, 255, 0.1);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: var(--bg-gradient);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            color: var(--white);
+            text-align: center;
+            margin: var(--spacing-xl) 0;
+        }
+        
+        .cta-title {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .cta-subtitle {
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto var(--spacing-lg);
+            font-size: 1.125rem;
+        }
+        
+        .cta-btn {
+            background-color: var(--white);
+            color: var(--primary);
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: var(--radius-sm);
+            display: inline-flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .cta-btn i {
+            margin-left: var(--spacing-sm);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            padding: var(--spacing-xl) 0 var(--spacing-md);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .footer-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--primary);
+        }
+        
+        .footer-description {
+            color: var(--gray);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+        
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .footer-header {
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .footer-links a {
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            border-top: 1px solid var(--light-gray);
+            padding-top: var(--spacing-md);
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+        
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+        
+        .modal-close:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .plan-description-modal {
+            color: var(--gray);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+        
+        .plan-schedule {
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .schedule-row {
+            display: flex;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .schedule-row:last-child {
+            border-bottom: none;
+        }
+        
+        .schedule-day {
+            width: 30%;
+            padding: var(--spacing-md);
+            font-weight: 600;
+            background-color: var(--secondary);
+        }
+        
+        .schedule-exercise {
+            width: 70%;
+            padding: var(--spacing-md);
+        }
+        
+        .plan-notes {
+            background-color: var(--secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .plan-notes h4 {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .plan-notes ul {
+            padding-left: 1.5rem;
+        }
+        
+        .plan-notes li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .start-plan-form {
+            background-color: var(--secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+        }
+        
+        /* Auth Modal Specific */
+        .modal-tabs {
+            display: flex;
+            margin-bottom: var(--spacing-lg);
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .modal-tab {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: none;
+            border: none;
+            font-weight: 500;
+            color: var(--gray);
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .modal-tab.active {
+            color: var(--primary);
+        }
+        
+        .modal-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .modal-form-container {
+            display: none;
+        }
+        
+        .modal-form-container.active {
+            display: block;
+        }
+        
+        .form-divider {
+            text-align: center;
+            margin: var(--spacing-md) 0;
+            position: relative;
+        }
+        
+        .form-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--light-gray);
+        }
+        
+        .form-divider span {
+            position: relative;
+            background-color: var(--white);
+            padding: 0 var(--spacing-md);
+            color: var(--gray);
+        }
+        
+        .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--light-gray);
+            background-color: var(--white);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .social-btn i {
+            margin-right: var(--spacing-sm);
+        }
+        
+        .social-btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .google-btn i {
+            color: #DB4437;
+        }
+        
+        .facebook-btn i {
+            color: #4267B2;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        /* Media Queries */
+        @media (max-width: 992px) {
+            .hero-image {
+                display: none;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+                text-align: center;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--white);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: var(--spacing-xl);
+                transform: translateX(-100%);
+                transition: var(--transition);
+                z-index: 90;
+            }
+            
+            body.dark-mode .nav-links {
+                background-color: var(--white);
+            }
+            
+            .nav-links.active {
+                transform: translateX(0);
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+                z-index: 95;
+            }
+            
+            .features-grid,
+            .plans-container,
+            .progress-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .hero-btns .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <span class="logo-icon"><i class="fa-solid fa-dumbbell"></i></span>
+                    SkazanyApp
+                </a>
+                <button class="mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="#hero">Start</a></li>
+                    <li><a href="#features">Funkcje</a></li>
+                    <li><a href="#plans">Plany</a></li>
+                    <li><a href="#progress">Postępy</a></li>
+                    <li><a href="#contact">Kontakt</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="theme-toggle">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <button class="btn btn-secondary login-btn">Logowanie</button>
+                    <button class="btn btn-primary signup-btn">Rejestracja</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero section" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fa-solid fa-bolt"></i> Inspirowane książką "Skazany na Trening"
+                </div>
+                <h1>Osiągaj swoje cele <br><span class="text-gradient">bez wymówek</span></h1>
+                <p class="hero-subtitle">Aplikacja treningowa zaprojektowana dla osób, które chcą trenować mądrze i efektywnie, wykorzystując sprawdzone metody kalisteniki.</p>
+                <div class="hero-btns">
+                    <button class="btn btn-primary">Rozpocznij za darmo <i class="fa-solid fa-arrow-right btn-icon"></i></button>
+                    <button class="btn btn-secondary">Zobacz plany</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="/api/placeholder/650/500" alt="Aplikacja treningowa na urządzeniach" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Wszystko, czego potrzebujesz do efektywnego treningu</h2>
+                <p>Nasza aplikacja łączy prostotę z funkcjonalnością, aby każdy trening przybliżał Cię do celu.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <h3 class="feature-title">Inteligentny kalendarz</h3>
+                    <p class="feature-desc">Planuj swoje treningi z łatwością i nigdy nie zapomnij o ćwiczeniach. Nasz kalendarz automatycznie oznacza dni treningowe.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Śledzenie postępów</h3>
+                    <p class="feature-desc">Obserwuj swój rozwój dzięki szczegółowym statystykom i wykresom. Motywuj się widząc, jak zwiększasz liczbę powtórzeń.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <h3 class="feature-title">Gotowe plany treningowe</h3>
+                    <p class="feature-desc">Korzystaj z planów "Weteran", "Świeża krew", "Dobre sprawowanie" i innych, wzorowanych na książce "Skazany na Trening".</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Preview Section -->
+    <section class="section app-preview" id="app-preview">
+        <div class="container">
+            <div class="preview-headline">
+                <h2>Twój osobisty dziennik treningowy</h2>
+            </div>
+            <div class="preview-container">
+                <div class="preview-header">
+                    <h3 class="preview-title">Plan: Dobre sprawowanie</h3>
+                    <div class="preview-date">11 marca 2025</div>
+                </div>
+                <div class="calendar-container">
+                    <div class="calendar-nav">
+                        <div class="calendar-month">Marzec 2025</div>
+                        <div class="calendar-controls">
+                            <button class="calendar-btn">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button class="calendar-btn">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-header">Pon</div>
+                        <div class="calendar-header">Wt</div>
+                        <div class="calendar-header">Śr</div>
+                        <div class="calendar-header">Czw</div>
+                        <div class="calendar-header">Pt</div>
+                        <div class="calendar-header">Sob</div>
+                        <div class="calendar-header">Niedz</div>
+                        
+                        <div class="calendar-day inactive">24</div>
+                        <div class="calendar-day inactive">25</div>
+                        <div class="calendar-day inactive">26</div>
+                        <div class="calendar-day inactive">27</div>
+                        <div class="calendar-day inactive">28</div>
+                        <div class="calendar-day">1</div>
+                        <div class="calendar-day">2</div>
+                        
+                        <div class="calendar-day workout">3</div>
+                        <div class="calendar-day">4</div>
+                        <div class="calendar-day workout">5</div>
+                        <div class="calendar-day">6</div>
+                        <div class="calendar-day workout">7</div>
+                        <div class="calendar-day">8</div>
+                        <div class="calendar-day">9</div>
+                        
+                        <div class="calendar-day workout">10</div>
+                        <div class="calendar-day today">11</div>
+                        <div class="calendar-day workout">12</div>
+                        <div class="calendar-day">13</div>
+                        <div class="calendar-day workout">14</div>
+                        <div class="calendar-day">15</div>
+                        <div class="calendar-day">16</div>
+                        
+                        <div class="calendar-day">17</div>
+                        <div class="calendar-day">18</div>
+                        <div class="calendar-day">19</div>
+                        <div class="calendar-day">20</div>
+                        <div class="calendar-day">21</div>
+                        <div class="calendar-day">22</div>
+                        <div class="calendar-day">23</div>
+                    </div>
+                </div>
+                <div class="workout-summary">
+                    <div class="workout-day">Poniedziałek, 10 marca - Trening</div>
+                    <ul class="workout-exercises">
+                        <li>Pompki: 3 × 15 powtórzeń</li>
+                        <li>Wznosy nóg: 3 × 10 powtórzeń</li>
+                        <li>Czas trwania: 25 minut</li>
+                        <li>Notatka: Czuję progres w pompkach!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plans Section -->
+    <section class="section plans" id="plans">
+        <div class="container">
+            <div class="section-header">
+                <h2>Wybierz plan dostosowany do Twoich potrzeb</h2>
+                <p>Każdy plan został opracowany na podstawie metody "więziennej zaprawy", aby zapewnić maksymalną efektywność.</p>
+            </div>
+            <div class="plans-container">
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-tag">Dla początkujących</div>
+                        <h3 class="plan-name">Świeża Krew</h3>
+                    </div>
+                    <div class="plan-description">
+                        <p>Znakomity program treningowy dla nowicjuszy w kalistenice. Wykonuje się tu tylko 4 najbardziej podstawowe ćwiczenia w 2 sesjach tygodniowo.</p>
+                    </div>
+                    <div class="plan-footer">
+                        <button class="btn btn-primary">Wybierz plan</button>
+                    </div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-tag">Polecany</div>
+                        <h3 class="plan-name">Dobre Sprawowanie</h3>
+                    </div>
+                    <div class="plan-description">
+                        <p>Najlepszy program fundamentalnego treningu z masą ciała. Zawiera wszystkie ćwiczenia z "wielkiej szóstki", wykonywane w 3 sesjach tygodniowo.</p>
+                    </div>
+                    <div class="plan-footer">
+                        <button class="btn btn-primary">Wybierz plan</button>
+                    </div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-tag">Zaawansowany</div>
+                        <h3 class="plan-name">Weteran</h3>
+                    </div>
+                    <div class="plan-description">
+                        <p>Smakowita, inteligentna propozycja dla zaawansowanych. Zamiast trenować 2-3 razy w tygodniu, zawodnik ćwiczy aż 6 razy, ale skupia się tylko na jednej technice dziennie.</p>
+                    </div>
+                    <div class="plan-footer">
+                        <button class="btn btn-primary">Wybierz plan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section class="section" id="progress">
+        <div class="container">
+            <div class="section-header">
+                <h2>Śledź swoje postępy</h2>
+                <p>Monitoruj swój rozwój, zdobywaj osiągnięcia i utrzymuj motywację.</p>
+            </div>
+            <div class="progress-cards">
+                <div class="progress-card">
+                    <h3>Postęp w pompkach</h3>
+                    <div class="chart-placeholder">
+                        Wykres postępu w pompkach
+                    </div>
+                    <p>Zwiększ swoją liczbę powtórzeń z tygodnia na tydzień. Śledzenie postępów to klucz do motywacji.</p>
+                </div>
+                <div class="progress-card">
+                    <h3>Twoje osiągnięcia</h3>
+                    <ul class="achievements-list">
+                        <li class="achievement-item">
+                            <div class="achievement-icon">
+                                <i class="fa-solid fa-fire"></i>
+                            </div>
+                            <span class="achievement-text">7 dni treningowych z rzędu</span>
+                        </li>
+                        <li class="achievement-item">
+                            <div class="achievement-icon">
+                                <i class="fa-solid fa-medal"></i>
+                            </div>
+                            <span class="achievement-text">50 pompek w jednej sesji</span>
+                        </li>
+                        <li class="achievement-item">
+                            <div class="achievement-icon">
+                                <i class="fa-solid fa-trophy"></i>
+                            </div>
+                            <span class="achievement-text">Ukończony plan "Świeża krew"</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Co mówią nasi użytkownicy</h2>
+                <p>Sprawdź opinie osób, które już trenują z naszą aplikacją.</p>
+            </div>
+            <div class="testimonial-cards">
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="fa-solid fa-quote-right"></i>
+                    </div>
+                    <p class="testimonial-content">Ta aplikacja całkowicie zmieniła moje podejście do treningów. Zacząłem od planu "Świeża krew", a po 3 miesiącach jestem już w stanie wykonać 20 podciągnięć pod rząd. Polecam każdemu!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div>
+                            <span class="author-name">Marek Kowalski</span>
+                            <span class="author-title">Użytkownik od 6 miesięcy</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="fa-solid fa-quote-right"></i>
+                    </div>
+                    <p class="testimonial-content">Funkcja śledzenia postępów motywuje mnie każdego dnia. Widzę, jak z tygodnia na tydzień robię coraz więcej powtórzeń. Plan "Dobre sprawowanie" sprawdza się rewelacyjnie.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div>
+                            <span class="author-name">Anna Nowak</span>
+                            <span class="author-title">Użytkowniczka od 3 miesięcy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Gotowy, by rozpocząć swoją przemianę?</h2>
+            <p class="cta-subtitle">Dołącz do tysięcy osób, które już trenują z naszą aplikacją i osiągają niesamowite rezultaty.</p>
+            <a href="#" class="cta-btn">Rozpocznij za darmo <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Skontaktuj się z nami</h2>
+                <p>Masz pytania? Jesteśmy tutaj, aby pomóc.</p>
+            </div>
+            <div class="contact-form progress-card">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Imię i nazwisko</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Adres e-mail</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Wiadomość</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Wyślij wiadomość</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">SkazanyApp</div>
+                    <p class="footer-description">Aplikacja treningowa inspirowana książką "Skazany na Trening", pomagająca w śledzeniu postępów i osiąganiu celów treningowych.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-header">Nawigacja</h4>
+                    <ul class="footer-links">
+                        <li><a href="#hero">Start</a></li>
+                        <li><a href="#features">Funkcje</a></li>
+                        <li><a href="#plans">Plany treningowe</a></li>
+                        <li><a href="#progress">Postępy</a></li>
+                        <li><a href="#contact">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-header">Plany treningowe</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Świeża krew</a></li>
+                        <li><a href="#">Dobre sprawowanie</a></li>
+                        <li><a href="#">Weteran</a></li>
+                        <li><a href="#">Solitary Confinement</a></li>
+                        <li><a href="#">Więcej planów</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-header">Kontakt</h4>
+                    <ul class="footer-links">
+                        <li><i class="fa-solid fa-envelope"></i> kontakt@skazanyapp.pl</li>
+                        <li><i class="fa-solid fa-phone"></i> +48 123 456 789</li>
+                        <li><i class="fa-solid fa-location-dot"></i> ul. Treningowa 10, Warszawa</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 SkazanyApp. Wszelkie prawa zastrzeżone.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Plan Details Modal -->
+    <div class="modal" id="planModal">
+        <div class="modal-content">
+            <button class="modal-close"><i class="fa-solid fa-times"></i></button>
+            <h2 id="planModalTitle" class="modal-title">Szczegóły planu</h2>
+            <p id="planModalDescription" class="plan-description-modal"></p>
+            
+            <h3>Harmonogram treningów</h3>
+            <div id="planSchedule" class="plan-schedule">
+                <!-- Schedule rows will be dynamically added here -->
+            </div>
+            
+            <div class="start-plan-form">
+                <h3>Rozpocznij plan</h3>
+                <div class="form-group">
+                    <label for="planStartDate">Wybierz datę rozpoczęcia:</label>
+                    <input type="date" id="planStartDate" required>
+                </div>
+                <button id="startPlanBtn" class="btn btn-primary">Dodaj plan do mojego konta</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login/Signup Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <button class="modal-close"><i class="fa-solid fa-times"></i></button>
+            <div class="modal-tabs">
+                <button class="modal-tab active" data-tab="login">Logowanie</button>
+                <button class="modal-tab" data-tab="signup">Rejestracja</button>
+            </div>
+            <div class="modal-form-container active" id="loginForm">
+                <form>
+                    <div class="form-group">
+                        <label for="loginEmail">Adres e-mail</label>
+                        <input type="email" id="loginEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Hasło</label>
+                        <input type="password" id="loginPassword" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Zaloguj się</button>
+                </form>
+                <div class="form-divider">
+                    <span>lub</span>
+                </div>
+                <div class="social-login">
+                    <button class="social-btn google-btn">
+                        <i class="fa-brands fa-google"></i> Google
+                    </button>
+                    <button class="social-btn facebook-btn">
+                        <i class="fa-brands fa-facebook-f"></i> Facebook
+                    </button>
+                </div>
+            </div>
+            <div class="modal-form-container" id="signupForm">
+                <form>
+                    <div class="form-group">
+                        <label for="signupName">Imię i nazwisko</label>
+                        <input type="text" id="signupName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Adres e-mail</label>
+                        <input type="email" id="signupEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Hasło</label>
+                        <input type="password" id="signupPassword" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPasswordConfirm">Powtórz hasło</label>
+                        <input type="password" id="signupPasswordConfirm" name="passwordConfirm" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Zarejestruj się</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Awesome Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Header scroll effect
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                
+                // Change icon based on menu state
+                const icon = mobileMenuBtn.querySelector('i');
+                if (navLinks.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Smooth Scrolling for Navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    // Close mobile menu if open
+                    navLinks.classList.remove('active');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+            
+            // Theme Toggle
+            const themeToggle = document.querySelector('.theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            });
+            
+            // Login/Signup Modal
+            const loginBtn = document.querySelector('.login-btn');
+            const signupBtn = document.querySelector('.signup-btn');
+            const authModal = document.getElementById('authModal');
+            const modalTabs = document.querySelectorAll('.modal-tab');
+            const modalForms = document.querySelectorAll('.modal-form-container');
+            
+            // Open auth modal
+            if (loginBtn && signupBtn && authModal) {
+                loginBtn.addEventListener('click', () => {
+                    authModal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                    
+                    // Activate login tab
+                    modalTabs.forEach(tab => tab.classList.remove('active'));
+                    modalForms.forEach(form => form.classList.remove('active'));
+                    document.querySelector('[data-tab="login"]').classList.add('active');
+                    document.getElementById('loginForm').classList.add('active');
+                });
+                
+                signupBtn.addEventListener('click', () => {
+                    authModal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                    
+                    // Activate signup tab
+                    modalTabs.forEach(tab => tab.classList.remove('active'));
+                    modalForms.forEach(form => form.classList.remove('active'));
+                    document.querySelector('[data-tab="signup"]').classList.add('active');
+                    document.getElementById('signupForm').classList.add('active');
+                });
+            }
+            
+            // Close modals and tab switching
+            document.querySelectorAll('.modal-close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    // Find the parent modal
+                    const modal = this.closest('.modal');
+                    if (modal) {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = ''; // Restore scrolling
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                        document.body.style.overflow = ''; // Restore scrolling
+                    }
+                });
+            });
+            
+            modalTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.dataset.tab;
+                    
+                    // Activate clicked tab
+                    modalTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Show corresponding form
+                    modalForms.forEach(form => form.classList.remove('active'));
+                    document.getElementById(`${tabId}Form`).classList.add('active');
+                });
+            });
+            
+            // Calendar Day Click
+            const calendarDays = document.querySelectorAll('.calendar-day');
+            
+            calendarDays.forEach(day => {
+                day.addEventListener('click', () => {
+                    if (!day.classList.contains('inactive')) {
+                        // Deselect all days
+                        calendarDays.forEach(d => d.style.boxShadow = '');
+                        
+                        // Select clicked day
+                        day.style.boxShadow = '0 0 0 2px var(--primary)';
+                        
+                        // Update workout summary
+                        const workoutDay = document.querySelector('.workout-day');
+                        const workoutExercises = document.querySelector('.workout-exercises');
+                        
+                        if (workoutDay && workoutExercises) {
+                            if (day.classList.contains('workout')) {
+                                workoutDay.textContent = `${getDayName(Number(day.textContent))}, ${day.textContent} marca - Trening`;
+                                workoutExercises.innerHTML = `
+                                    <li>Pompki: 3 × 15 powtórzeń</li>
+                                    <li>Wznosy nóg: 3 × 10 powtórzeń</li>
+                                    <li>Czas trwania: 25 minut</li>
+                                    <li>Notatka: Czuję progres w pompkach!</li>
+                                `;
+                            } else {
+                                workoutDay.textContent = `${getDayName(Number(day.textContent))}, ${day.textContent} marca - Dzień wolny`;
+                                workoutExercises.innerHTML = '<li>Brak zaplanowanych ćwiczeń</li>';
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // Helper function to get day name
+            function getDayName(day) {
+                const days = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
+                // March 1, 2025 is a Saturday (day 6)
+                const dayIndex = (day + 5) % 7; // Calculate day of week
+                return days[dayIndex];
+            }
+            
+            // Form Submission
+            const contactForm = document.getElementById('contactForm');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(contactForm);
+                    const formValues = Object.fromEntries(formData.entries());
+                    
+                    alert(`Dziękujemy za wiadomość, ${formValues.name}! Odpowiemy na podany adres e-mail: ${formValues.email}`);
+                    contactForm.reset();
+                });
+            }
+            
+            // Plan details functionality
+            const planModal = document.getElementById('planModal');
+            
+            if (planModal) {
+                // Get plan buttons
+                const planButtons = document.querySelectorAll('.plan-footer .btn');
+                
+                // Get references to plan modal elements
+                const planModalTitle = document.getElementById('planModalTitle');
+                const planModalDescription = document.getElementById('planModalDescription');
+                const planSchedule = document.getElementById('planSchedule');
+                const startPlanBtn = document.getElementById('startPlanBtn');
+                
+                // Add click event to plan buttons
+                planButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const planCard = button.closest('.plan-card');
+                        const planName = planCard.querySelector('.plan-name').textContent;
+                        showPlanDetails(planName);
+                    });
+                });
+                
+                // Plan details display function
+                function showPlanDetails(planName) {
+                    // Update modal title
+                    if (planModalTitle) planModalTitle.textContent = planName;
+                    
+                    // Clear previous schedule if element exists
+                    if (planSchedule) planSchedule.innerHTML = '';
+                    
+                    // Set plan details based on plan name
+                    if (planModalDescription && planSchedule) {
+                        switch(planName) {
+                            case 'Świeża Krew':
+                                planModalDescription.textContent = 'Jest to znakomity program treningowy dla nowicjuszy w kalistenice czy w ogóle w ćwiczeniach muskulatury. Wykonuje się tu tylko 4 najbardziej podstawowe ćwiczenia w 2 sesjach tygodniowo.';
+                                
+                                // Add schedule
+                                addScheduleRow(planSchedule, 'Poniedziałek', 'Pompki (2-3 serie), Wznosy nóg (2-3 serie)');
+                                addScheduleRow(planSchedule, 'Wtorek', 'Wolne');
+                                addScheduleRow(planSchedule, 'Środa', 'Wolne');
+                                addScheduleRow(planSchedule, 'Czwartek', 'Wolne');
+                                addScheduleRow(planSchedule, 'Piątek', 'Podciąganie (2-3 serie), Przysiady (2-3 serie)');
+                                addScheduleRow(planSchedule, 'Sobota', 'Wolne');
+                                addScheduleRow(planSchedule, 'Niedziela', 'Wolne');
+                                
+                                // Add notes
+                                const notes = document.createElement('div');
+                                notes.className = 'plan-notes';
+                                notes.innerHTML = `
+                                    <h4>Ważne informacje:</h4>
+                                    <ul>
+                                        <li>Gdy rozpoczynasz treningi, kondycja jest zwykle słaba, a obolałość mięśni po sesji bywa obezwładniająca.</li>
+                                        <li>Ten zestaw początkowy zawiera tylko 4 ćwiczenia z "wielkiej szóstki".</li>
+                                        <li>Mięśnie adaptują się szybciej niż stawy. Program daje tkankom miękkim czas na "dogonienie" mięśni.</li>
+                                        <li>Stosuj ten program na wczesnych etapach pracy w 10 krokach. Gdy przekroczysz krok 6 we wszystkich ćwiczeniach, nadejdzie pora na przejście do następnego programu.</li>
+                                    </ul>
+                                `;
+                                planSchedule.appendChild(notes);
+                                break;
+                                
+                            case 'Dobre Sprawowanie':
+                                planModalDescription.textContent = 'Najlepszy program fundamentalnego treningu z masą ciała. Zawiera wszystkie ćwiczenia z "wielkiej szóstki", wykonywane w 3 sesjach tygodniowo.';
+                                
+                                // Add schedule
+                                addScheduleRow(planSchedule, 'Poniedziałek', 'Pompki (2 serie), Wznosy nóg (2 serie)');
+                                addScheduleRow(planSchedule, 'Wtorek', 'Wolne');
+                                addScheduleRow(planSchedule, 'Środa', 'Podciąganie (2 serie), Przysiady (2 serie)');
+                                addScheduleRow(planSchedule, 'Czwartek', 'Wolne');
+                                addScheduleRow(planSchedule, 'Piątek', 'Pompki w staniu na rękach (2 serie), Mostek (2 serie)');
+                                addScheduleRow(planSchedule, 'Sobota', 'Wolne');
+                                addScheduleRow(planSchedule, 'Niedziela', 'Wolne');
+                                
+                                // Add notes
+                                const dobreNotes = document.createElement('div');
+                                dobreNotes.className = 'plan-notes';
+                                dobreNotes.innerHTML = `
+                                    <h4>Ważne informacje:</h4>
+                                    <ul>
+                                        <li>Program ten można wcisnąć w rozkład zajęć niemal każdego zabieganego człowieka.</li>
+                                        <li>Może (i powinien) być on stosowany przez każdego sportowca, któremu zależy na solidnym nabraniu siły, bez względu na to, jak bardzo jest zaawansowany.</li>
+                                        <li>Dla osób o znakomitej zdolności do regeneracji może być nieco zbyt zachowawczy. Dodatkowy odpoczynek może się zaś przydać ludziom, którzy trenują też inne dyscypliny.</li>
+                                    </ul>
+                                `;
+                                planSchedule.appendChild(dobreNotes);
+                                break;
+                                
+                            case 'Weteran':
+                                planModalDescription.textContent = 'Smakowita, inteligentna propozycja dla zaawansowanych. Zamiast trenować 2-3 razy w tygodniu, zawodnik ćwiczy aż 6 razy, ale skupia się tylko na jednej technice dziennie.';
+                                
+                                // Add schedule
+                                addScheduleRow(planSchedule, 'Poniedziałek', 'Podciąganie (2-3 serie treningowe)');
+                                addScheduleRow(planSchedule, 'Wtorek', 'Mostek (2-3 serie treningowe)');
+                                addScheduleRow(planSchedule, 'Środa', 'Pompki w staniu na rękach (2-3 serie treningowe)');
+                                addScheduleRow(planSchedule, 'Czwartek', 'Wznosy nóg (2-3 serie treningowe)');
+                                addScheduleRow(planSchedule, 'Piątek', 'Przysiady (2-3 serie treningowe)');
+                                addScheduleRow(planSchedule, 'Sobota', 'Pompki (2-3 serie treningowe)');
+                                addScheduleRow(planSchedule, 'Niedziela', 'Wolne');
+                                
+                                // Add notes
+                                const weteranNotes = document.createElement('div');
+                                weteranNotes.className = 'plan-notes';
+                                weteranNotes.innerHTML = `
+                                    <h4>Ważne informacje:</h4>
+                                    <ul>
+                                        <li>Program ten jest wygodny dla osób, które dysponują ograniczonym czasem. Sesje można niekiedy odbyć w mniej niż 6-7 minut dziennie!</li>
+                                        <li>Regeneracja jest całkiem szybka, ponieważ nigdy nie trenuje się górnej czy dolnej połowy ciała 2 dni z rzędu.</li>
+                                        <li>Jest to bardzo produktywny program dla zawodników, którzy chcą zwiększyć siłę i posuwać się w zestawie 10 kroków.</li>
+                                        <li>Jest to również dobry punkt wyjścia do eksperymentów. Pamiętaj, że zafundowanie sobie kontrolowanego dnia wolnego jest korzystne w dowolnym programie treningowym.</li>
+                                    </ul>
+                                `;
+                                planSchedule.appendChild(weteranNotes);
+                                break;
+                        }
+                    }
+                    
+                    // Show modal
+                    planModal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                }
+                
+                function addScheduleRow(container, day, exercise) {
+                    const row = document.createElement('div');
+                    row.className = 'schedule-row';
+                    
+                    const dayEl = document.createElement('div');
+                    dayEl.className = 'schedule-day';
+                    dayEl.textContent = day;
+                    
+                    const exerciseEl = document.createElement('div');
+                    exerciseEl.className = 'schedule-exercise';
+                    exerciseEl.textContent = exercise;
+                    
+                    row.appendChild(dayEl);
+                    row.appendChild(exerciseEl);
+                    container.appendChild(row);
+                }
+                
+                // Start plan button
+                if (startPlanBtn) {
+                    startPlanBtn.addEventListener('click', () => {
+                        const startDate = document.getElementById('planStartDate').value;
+                        
+                        if (!startDate) {
+                            alert('Proszę wybrać datę rozpoczęcia planu');
+                            return;
+                        }
+                        
+                        alert(`Plan "${planModalTitle.textContent}" został dodany do Twojego konta. Rozpoczęcie: ${startDate}`);
+                        planModal.classList.remove('active');
+                        document.body.style.overflow = ''; // Restore scrolling
+                    });
+                }
+            }
+            
+            // Button animations
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('mousedown', () => {
+                    button.style.transform = 'scale(0.98)';
+                });
+                
+                button.addEventListener('mouseup', () => {
+                    button.style.transform = '';
+                });
+                
+                button.addEventListener('mouseleave', () => {
+                    button.style.transform = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
